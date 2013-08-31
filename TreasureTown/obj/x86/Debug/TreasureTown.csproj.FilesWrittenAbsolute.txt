@@ -1,0 +1,4 @@
+/home/corey/projects/TreasureTown/TreasureTown/bin/Debug/TreasureTown.exe.mdb
+/home/corey/projects/TreasureTown/TreasureTown/bin/Debug/TreasureTown.exe
+/home/corey/projects/TreasureTown/TreasureTown/obj/x86/Debug/TreasureTown.exe
+/home/corey/projects/TreasureTown/TreasureTown/obj/x86/Debug/TreasureTown.exe.mdb
