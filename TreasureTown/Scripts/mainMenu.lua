@@ -1,0 +1,20 @@
+function showSplash()
+	Event.Write("showSplash()")
+	runCoroutine(function()
+		Event.Write("SHOWING SPLASH")
+		Event.MenuLerpColor("SPLASH", 1, 1, 1, 1, 2.5)
+		waitSeconds(4)
+		Event.MenuLerpColor("SPLASH", 0, 0, 0, 0, 1.5)
+		waitSeconds(2.5)
+		Event.MenuDestroyGraphic("SPLASH")
+		Event.MenuShowTitle()
+	end)
+end
+
+function cancelSplashScreen()
+	abortAllCoroutines()
+	runCoroutine(function()
+		Event.MenuDestroyGraphic("SPLASH")
+		Event.MenuShowTitle()
+	end)
+end
