@@ -142,5 +142,6 @@ namespace TreasureTown
 			currentScene.Initialize();
 		}
 	}
+
 }
 
