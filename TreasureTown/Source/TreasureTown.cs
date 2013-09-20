@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
-using LuaInterface;
+using SchedulerTest;
 
 #endregion
 
@@ -23,14 +23,14 @@ namespace TreasureTown
 		static Scene currentScene;
 		public static Color bgColor { get; private set; }
 		public static ContentManager StaticContent { get; private set; }
-		public static Lua MainLua { get; private set; }
 		public static Rectangle FullscreenRect { get; private set; }
 		public static Random StaticRandom;
 
 		public TreasureTown ()
 		{
 			StaticContent = Content;
-			MainLua = new Lua();
+			Scheduler.Initialize();
+
 			graphics = new GraphicsDeviceManager (this);
 			Content.RootDirectory = "Content";	  
 			StaticRandom = new Random();
@@ -67,13 +67,6 @@ namespace TreasureTown
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 			GameScene.MapSpriteBatch = new SpriteBatch (GraphicsDevice);
 			GameScene.MapTarget = new RenderTarget2D(GraphicsDevice, 600, 600);
-
-			// Load all lua content
-			MainLua.DoFile ("Scripts/scheduler.lua");
-			MainLua.DoFile ("Scripts/audio_assets.lua");
-			MainLua.DoFile ("Scripts/main.lua");
-			MainLua.DoFile ("Scripts/items.lua");
-			MainLua.DoFile ("Scripts/mapdata.lua");
 			AudioManager.Instance.Initialize ();
 
 
@@ -94,7 +87,7 @@ namespace TreasureTown
 			AudioManager.Instance.Update (gameTime);
 			KeyboardManager.Update (gameTime);
 			MouseManager.Update(gameTime);
-			MainLua.DoString ("updateCoroutines(" + gameTime.ElapsedGameTime.TotalSeconds + ")");
+			Scheduler.Update(gameTime.ElapsedGameTime.TotalSeconds);
 
 			if (currentScene != null)
 			{

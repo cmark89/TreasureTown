@@ -48,8 +48,8 @@
     <Reference Include="OpenTK">
       <HintPath>OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="LuaInterface">
-      <HintPath>..\..\..\repos\MonoLuaInterface\bin\LuaInterface.dll</HintPath>
+    <Reference Include="ORG.Scheduler">
+      <HintPath>..\..\ObjectivelyRadical\Scheduler\ORG.Scheduler\ORG.Scheduler\bin\Debug\ORG.Scheduler.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +72,8 @@
     <Compile Include="Source\Engine\ScoreChanger.cs" />
     <Compile Include="Source\Engine\Scenes\RankingScene.cs" />
     <Compile Include="Source\Engine\Scenes\MenuScene.cs" />
+    <Compile Include="Scripts\Scripts.cs" />
+    <Compile Include="Source\Engine\Navmesh.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
@@ -228,18 +230,6 @@
     <Content Include="Content\Graphics\GUI\GreedBanner.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Audio\Music\BakugekiNights.WAV">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Audio\Music\DorobonusRound.WAV">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Audio\Music\PointsOrDie.WAV">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Audio\Music\TreasureHunt.WAV">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="OpenTK.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -387,7 +377,16 @@
     <Content Include="Scripts\mainMenu.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\scheduler.lua">
+    <Content Include="Content\Audio\Music\BakugekiNights.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Audio\Music\DorobonusRound.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Audio\Music\PointsOrDie.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Audio\Music\TreasureHunt.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

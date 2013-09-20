@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
-using LuaInterface;
+using SchedulerTest;
 
 namespace TreasureTown
 {
@@ -21,6 +21,26 @@ namespace TreasureTown
 				return _instance;
 			}
 		}
+
+		private readonly string[] soundEffectsTable = {
+			"bomb",
+			"boxring",
+			"change",
+			"closemap",
+			"Extend",
+			"gamestart",
+			"gainpoints",
+			"losepoints",
+			"openmap",
+			"whoosh"
+		};
+
+		private readonly string[] songTable = {
+			"BakugekiNights",
+			"DorobonusRound",
+			"PointsOrDie",
+			"TreasureHunt"
+		};
 
 		public Dictionary<string, SoundEffect> SoundEffects;
 		public Dictionary<string, SoundEffect> Songs;
@@ -71,15 +91,14 @@ namespace TreasureTown
 		public void LoadSoundEffects()
 		{
 			SoundEffects = new Dictionary<string, SoundEffect>();
-			LuaTable soundEffectsTable = TreasureTown.MainLua.GetTable("content_sound_effects");
 
 			string newSoundEffectName;
 			SoundEffect newSoundEffect;
-			for(int i = 0; i < soundEffectsTable.Keys.Count; i++)
+			for(int i = 0; i < soundEffectsTable.Length; i++)
 			{
 				try
 				{
-					newSoundEffectName = (string)soundEffectsTable[i+1];
+					newSoundEffectName = soundEffectsTable[i];
 					newSoundEffect = TreasureTown.StaticContent.Load<SoundEffect>("Audio/SoundEffects/" + newSoundEffectName);
 					SoundEffects.Add(newSoundEffectName, newSoundEffect);
 				}
@@ -93,16 +112,15 @@ namespace TreasureTown
 		public void LoadSongs ()
 		{
 			Songs = new Dictionary<string, SoundEffect>();
-			LuaTable songTable = TreasureTown.MainLua.GetTable ("content_music");
 
 			string newSongName;
 			SoundEffect newSong;
 
-			for (int i = 0; i < songTable.Keys.Count; i++)
+			for (int i = 0; i < songTable.Length; i++)
 			{
 				try
 				{
-					newSongName = (string)songTable[i+1];
+					newSongName = (string)songTable[i];
 					newSong = TreasureTown.StaticContent.Load<SoundEffect>("Audio/Music/" + newSongName + ".wav");
 					Songs.Add(newSongName, newSong);
 				}

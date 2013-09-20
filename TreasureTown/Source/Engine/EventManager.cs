@@ -1,4 +1,5 @@
 using System;
+using SchedulerTest;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
@@ -31,9 +32,9 @@ namespace TreasureTown
 		public static void SendSignal(string signal)
 		{
 			Console.WriteLine("Send signal: " + signal);
-			
+
 			if(GameScene.Instance != null)
-				TreasureTown.MainLua.DoString("sendSignal(\"" + signal + "\")");
+				SchedulerTest.Scheduler.SendSignal(signal);
 		}
 
 		public static void GetNextTeam()
@@ -237,6 +238,7 @@ namespace TreasureTown
 		
 		public static void MenuLerpColor(string item, float r, float g, float b, float a, float time)
 		{
+
 			MenuScene.Instance.GetGraphic(item).LerpColor(r,g,b,a,time);
 		}
 		
@@ -357,8 +359,8 @@ namespace TreasureTown
 		{
 			if (GameScene.Instance.FinalTurn)
 			{
-				TreasureTown.MainLua.DoString("abortAllCoroutines()");
-				TreasureTown.MainLua.DoString("endGame()");
+				Scheduler.AbortAllCoroutines();
+				Scheduler.Execute(Scripts.endGame);
 				return true;
 			}
 			else

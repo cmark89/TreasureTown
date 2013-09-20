@@ -1,5 +1,5 @@
 using System;
-using LuaInterface;
+using SchedulerTest;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -39,9 +39,6 @@ namespace TreasureTown
 		Vector2 origin = Vector2.Zero;
 		Vector2 scale = new Vector2(1f,1f);
 
-		bool clickable;
-		LuaFunction onClick;
-
 		float drawDepth;
 		public string Name { get; private set; }
 
@@ -49,7 +46,6 @@ namespace TreasureTown
 		{
 			texture = TreasureTown.StaticContent.Load<Texture2D>(textureName);
 			SetPosition(positionX, positionY);
-			clickable = isClickable;
 			if(newColor != null) color = (Color)newColor;
 			drawDepth = depth;
 			Name = objectName;
@@ -59,7 +55,6 @@ namespace TreasureTown
 		{
 			texture = tex;
 			SetPosition(positionX, positionY);
-			clickable = isClickable;
 			if(newColor != null) color = (Color)newColor;
 			drawDepth = depth;
 			Name = objectName;
@@ -103,10 +98,7 @@ namespace TreasureTown
 		// Because of the naive way that clicking is handled, clickable objects cannot be rotated.
 		public void SetRotation(float targetRotation)
 		{
-			if(clickable)
-				return;
-			else
-				rotation = targetRotation;
+			rotation = targetRotation;
 		}
 
 		#region LERP FUNCTIONS
@@ -250,11 +242,6 @@ namespace TreasureTown
 		public void Update (GameTime gameTime)
 		{
 			LerpUpdate (gameTime);
-			if (clickable && MouseManager.MouseInRect (new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height)) && MouseManager.LeftClickUp)
-			{
-				// Activate the on click event
-				onClick.Call ();
-			}
 		}
 
 		public void Draw(SpriteBatch spriteBatch)

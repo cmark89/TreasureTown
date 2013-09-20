@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using LuaInterface;
+using SchedulerTest;
 
 namespace TreasureTown
 {
@@ -33,6 +33,8 @@ namespace TreasureTown
 		public float RemainingTime;
 		public float TeamTime;
 		public float RemainingTeamTime;
+
+		public bool setupCompleted = false;
 
 		public bool AvatarShown = false;
 		public bool CanMove = false;
@@ -100,7 +102,7 @@ namespace TreasureTown
 
 		public override void Initialize()
 		{
-			map = new Map((LuaTable)TreasureTown.MainLua["navmesh"]);
+			map = new Map();
 			townGenerator = new TownGenerator(map);
 
 			// Now generate the town!  --REFACTOR THIS!
@@ -138,11 +140,14 @@ namespace TreasureTown
 			SetupTeams ();
 			EventManager.KillMusic();
 			EventManager.PlaySong ("TreasureHunt");
-			TreasureTown.MainLua.DoString ("nextTeam()");
+			Scheduler.Execute(Scripts.nextTeam);
 		}
 
 		public override void Update (GameTime gameTime)
 		{
+			if(!setupCompleted)
+				return;
+
 			float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			if (!GameOver)
@@ -188,20 +193,23 @@ namespace TreasureTown
 		{
 			if (KeyboardManager.ButtonPressUp (Microsoft.Xna.Framework.Input.Keys.Up))
 			{
-				TreasureTown.MainLua.DoString ("goStraight()");
+				Scheduler.Execute(Scripts.goStraight);
 			}
 			else if (KeyboardManager.ButtonPressUp (Microsoft.Xna.Framework.Input.Keys.Left))
 			{
-				TreasureTown.MainLua.DoString ("turnLeft()");
+				Scheduler.Execute(Scripts.turnLeft);
 			}
 			else if (KeyboardManager.ButtonPressUp (Microsoft.Xna.Framework.Input.Keys.Right))
 			{
-				TreasureTown.MainLua.DoString ("turnRight()");
+				Scheduler.Execute(Scripts.turnRight);
 			}
 		}
 
 		public override void Draw (SpriteBatch spriteBatch)
 		{
+			if(!setupCompleted)
+				return;
+
 			foreach (GraphicElement g in objects)
 			{
 				g.Draw (spriteBatch);
@@ -267,11 +275,15 @@ namespace TreasureTown
 
 		public void GetNextTeam ()
 		{
+			EventManager.AddChange(15);
 			CurrentTeam++;
 			if (CurrentTeam >= Teams.Count)
 			{
 				CurrentTeam = 0;
 			}
+
+			if(!setupCompleted)
+				setupCompleted = true;
 		}
 
 
@@ -371,7 +383,7 @@ namespace TreasureTown
 		{
 			Vector2 pos = new Vector2(710, 548 - 65*((Teams.Count - 1) - GetTeamIndex (team)));
 			scoreChanges.Add (new ScoreChanger(team, pos, change, 2f));
-			TreasureTown.MainLua.DoString("delayPointScroll()");
+			Scheduler.Execute(Scripts.delayPointScroll);
 		}
 
 		public int GetTeamIndex(Team team)
@@ -529,7 +541,7 @@ namespace TreasureTown
 		public void TimeOver()
 		{
 			PauseTeamTime();
-			TreasureTown.MainLua.DoString ("endTurn()");
+			Scheduler.Execute(Scripts.endTurn);
 		}
 
 		public void PauseTeamTime()

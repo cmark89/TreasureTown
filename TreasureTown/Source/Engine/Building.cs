@@ -1,4 +1,5 @@
 using System;
+using SchedulerTest;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -85,7 +86,7 @@ namespace TreasureTown
 			else
 			{
 				// Do something so that it's not a waste?
-				TreasureTown.MainLua.DoString ("findEmpty()");
+				Scheduler.Execute(Scripts.findEmpty);
 			}
 		}
 

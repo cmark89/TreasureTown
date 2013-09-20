@@ -1,12 +1,13 @@
 using System;
-using LuaInterface;
+using System.Collections.Generic;
+using SchedulerTest;
 
 namespace TreasureTown
 {
 	public class Item
 	{
 		public ItemType Type { get; private set; }
-		LuaFunction onActivate;
+		ScriptWithArgs<int> onActivate;
 		Building thisBuilding;
 		public int value { get; private set; }
 
@@ -15,18 +16,35 @@ namespace TreasureTown
 			thisBuilding = building;
 			building.SetItem (this);
 			Type = thisType;
-			onActivate = (LuaFunction)TreasureTown.MainLua["find" + Type.ToString ()];
+			SetOnActivate();
 			value = pointValue;
+		}
+
+		public void SetOnActivate ()
+		{
+			switch (Type)
+			{
+			case(ItemType.Points):
+				onActivate = Scripts.findPoints;
+				break;
+			case(ItemType.Thief):
+				onActivate = Scripts.findThief;
+				break;
+			case(ItemType.Bomb):
+				onActivate = Scripts.findBomb;
+				break;
+			case(ItemType.Map):
+				onActivate = Scripts.findMap;
+				break;
+			}
 		}
 
 		public void Activate ()
 		{
 			if (onActivate != null)
 			{
-				if (Type == ItemType.Points)
-					onActivate.Call (value);
-				else
-					onActivate.Call ();
+				Console.WriteLine("Executing " + Type.ToString());
+				Scheduler.ExecuteWithArgs<int>(onActivate, value);
 			}
 
 			thisBuilding.FinishExploring ();

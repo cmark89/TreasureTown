@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SchedulerTest;
 
 namespace TreasureTown
 {
@@ -55,8 +56,6 @@ namespace TreasureTown
 
 		public void LoadContent()
 		{
-			TreasureTown.MainLua.DoFile ("Scripts/mainMenu.lua");
-
 			graphics = new Dictionary<string, Texture2D>()
 			{
 				{ "ORGSplash", TreasureTown.StaticContent.Load<Texture2D>("Graphics/Client/ObjectivelyRadicalSplash") },
@@ -109,7 +108,7 @@ namespace TreasureTown
 			{
 				if(phase == 1)
 				{
-					TreasureTown.MainLua.DoString("cancelSplashScreen()");
+					Scheduler.Execute(Scripts.cancelSplashScreen);
 				}
 				else if(phase == 2)
 				{
@@ -155,7 +154,7 @@ namespace TreasureTown
 			Console.WriteLine("ShowSplashScreen()");
 			Texture2D splash = graphics["ORGSplash"];
 			CreateGraphic(splash, (800 - splash.Width) /2, (600 - splash.Height) / 2, "SPLASH");
-			TreasureTown.MainLua.DoString ("showSplash()");
+			Scheduler.Execute(Scripts.showSplash);
 		}
 
 		public void ShowMenu()
