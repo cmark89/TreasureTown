@@ -72,8 +72,8 @@
     <Compile Include="Source\Engine\ScoreChanger.cs" />
     <Compile Include="Source\Engine\Scenes\RankingScene.cs" />
     <Compile Include="Source\Engine\Scenes\MenuScene.cs" />
-    <Compile Include="Scripts\Scripts.cs" />
     <Compile Include="Source\Engine\Navmesh.cs" />
+    <Compile Include="Scripts\Scripts.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
@@ -362,16 +362,10 @@
     <Content Include="Content\Audio\SoundEffects\bomb.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\audio_assets.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Scripts\main.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\items.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\mapdata.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\mainMenu.lua">
