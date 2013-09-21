@@ -22,7 +22,6 @@ namespace TreasureTown
 		Map map;
 		TownGenerator townGenerator;
 
-		#region ACTUAL GAME STUFF
 		public int TeamCount;
 		public List<Team> Teams;
 		public int CurrentTeam = -1;
@@ -70,8 +69,6 @@ namespace TreasureTown
 		public bool FinalTurn { get; private set; }
 
 
-		#endregion
-
 		public GameScene (int minutes, int teams = 2, int turnTime = 30)
 		{
 			_instance = this;
@@ -87,9 +84,6 @@ namespace TreasureTown
 			TeamCount = teams;
 
 			RemainingTime = minutes * 60;
-
-			// Hello, testicles
-			//RemainingTime = 35;
 
 			Compass = new Dictionary<MapDirection, float>()
 			{
@@ -275,7 +269,6 @@ namespace TreasureTown
 
 		public void GetNextTeam ()
 		{
-			EventManager.AddChange(15);
 			CurrentTeam++;
 			if (CurrentTeam >= Teams.Count)
 			{

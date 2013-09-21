@@ -206,8 +206,7 @@ namespace TreasureTown
 			Scheduler.ExecuteWithArgs<string>(showChangeGraphic, type);
 
 			yield return waitUntil("Change graphic shown");
-			EventManager.ResetChange();
-			EventManager.SendSignal("Change checked");
+			EventManager.SendSignal("Change run");
 		}
 
 		public static IEnumerator<PauseScript> showChangeGraphic (string type)
@@ -224,7 +223,8 @@ namespace TreasureTown
 
 			// Do this here, for some reason
 			EventManager.GenerateTown ();
-							
+			EventManager.ResetChange();
+
 			EventManager.LerpColor ("CHANGE", 0, 0, 0, 0, .5f);
 			yield return waitSeconds (.5f);
 			EventManager.DestroyGraphic ("CHANGE");
@@ -263,6 +263,8 @@ namespace TreasureTown
 				yield return waitSeconds(.5f);
 				EventManager.DestroyGraphic(graphicName);
 			}
+
+			EventManager.SendSignal("Change graphic shown");
 		}
 
 		public static IEnumerator<PauseScript> showExplosion()
